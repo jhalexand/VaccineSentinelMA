@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+
+# This example borrows from https://stackoverflow.com/a/56511950
+# It shows how to use an email account (Gmail) to send a text
+# to your phone via email. You'll need to fill in some values
+# at the top. I found this list of carrier-specific formats here:
+# https://www.dialmycalls.com/blog/send-text-messages-email-address
+# T-Mobile – number@tmomail.net
+# AT&T – number@txt.att.net
+# Sprint – number@messaging.sprintpcs.com
+# Verizon – number@vtext.com
+# Metro PCS – number@mymetropcs.com
+# Virgin Mobile – number@vmobl.com
+# Tracfone – number@mmst5.tracfone.com
+# Ting – number@message.ting.com
+# Boost Mobile – number@myboostmobile.com
+# U.S. Cellular – number@email.uscc.net
+
+# To use with GMail, you might need to create an application-specific
+# password. Go to your account settings at https://myaccount.google.com
+# then Security, then locate App password in the "Signing in to Google" section.
+# Make a new Mail password and call it something memorable. Put the
+# generated password into the password field below along with your email
+# address in the email field.
+
+import smtplib
+import os
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+email = "Your Email Address"
+password = "Your Password"
+sms_gateway = 'your_phone_number@tmomail.net' # using t-mobile as an example
+
+# If you don't use gmail, replace the smtp host with one for your
+# email service provider.
+smtp = "smtp.gmail.com"
+port = 587
+# This will start our email server
+server = smtplib.SMTP(smtp,port)
+# Starting the server connection
+server.starttls()
+# Now we need to login
+server.login(email,password)
+
+# Now we use the MIME module to structure our message.
+msg = MIMEMultipart()
+msg['From'] = email
+msg['To'] = sms_gateway
+# Make sure you also add new lines to your body
+num_sites = os.getenv('NUM_SITES')
+if int(num_sites) == 0:
+    body = "No vaccines are currently available\n"
+else:
+    body = num_sites + " vaccine sites available.  https://macovidvaccines.com/\n"
+# and then attach the message body
+msg.attach(MIMEText(body, 'plain'))
+
+sms = msg.as_string()
+
+server.sendmail(email,sms_gateway,sms)
+
+# lastly quit the server
+server.quit()

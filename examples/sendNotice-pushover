@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+
+# Pushover is a service that sends notifications to your smartphone.
+# For info, visit pushover.net
+
+# To get the python client, `pip3 install python-pushover`
+
+import os
+from pushover import Client
+
+pushover = Client("insert-your-user-key", api_token="insert-your api-token")
+num_sites = os.getenv('NUM_SITES')
+if int(num_sites) == 0:
+    pushover.send_message("No appointments are currently available.", title="Vaccine Update", url="https://www.macovidvaccines.com", url_title="MACovidVaccines.com")
+else:
+    pushover.send_message(num_sites + " site(s) with vaccines available!", title="Vaccine Update", url="https://www.macovidvaccines.com", url_title="MACovidVaccines.com")
+

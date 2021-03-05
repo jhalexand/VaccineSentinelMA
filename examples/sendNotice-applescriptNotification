@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# This simple script for Macs uses the osascript command to invoke
+# an AppleScript that adds a notification to the Notification Center
+# when invoked.
+
+osascript -e "display notification \"Vaccines now available at $NUM_SITES locations.\""
