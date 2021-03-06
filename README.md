@@ -1,5 +1,7 @@
 # Vaccine Sentinel for Massachusetts
 
+![Build](https://github.com/jhalexand/VaccineSentinelMA/actions/workflows/build.yaml/badge.svg)
+
 A program to watch for vaccine availability in MA. When availability changes,
 it will invoke the notificationScript as many as 3 times
 (once every 5 minutes) until the next change occurs. The notificationScript
