@@ -51,7 +51,7 @@ msg['To'] = sms_gateway
 num_sites = os.getenv('NUM_SITES')
 if int(num_sites) == 0:
     msg['Subject'] = "Vaccine Update"
-    body = "No vaccines are currently available\n"
+    body = "No vaccines are currently available  \n"
 else:
     msg['Subject'] = num_sites + " vaccine sites available"
     body = "https://macovidvaccines.com/  \n"
